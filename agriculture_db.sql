@@ -6,8 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    phone VARCHAR(15),
-    role VARCHAR(30) NOT NULL
+    role VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS produce (
@@ -25,21 +24,28 @@ CREATE TABLE IF NOT EXISTS buyer_requirements (
     id INT AUTO_INCREMENT PRIMARY KEY,
     buyer_id INT,
     crop_name VARCHAR(100) NOT NULL,
-    quantity DECIMAL(10,2),
-    required_price DECIMAL(10,2),
-    location VARCHAR(150),
-    status VARCHAR(30) DEFAULT 'Open',
+    min_qty DECIMAL(10,2),
+    max_qty DECIMAL(10,2),
+    target_price DECIMAL(10,2),
     FOREIGN KEY (buyer_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS purchase_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    buyer_id INT,
     produce_id INT,
-    quantity DECIMAL(10,2),
-    offered_price DECIMAL(10,2),
-    status VARCHAR(30) DEFAULT 'Pending',
-    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (buyer_id) REFERENCES users(id),
-    FOREIGN KEY (produce_id) REFERENCES produce(id)
+    buyer_id INT,
+    status VARCHAR(30),
+    FOREIGN KEY (produce_id) REFERENCES produce(id),
+    FOREIGN KEY (buyer_id) REFERENCES users(id)
 );
+
+INSERT INTO users (name, email, password, role) VALUES
+('Rahul Farmer', 'rahul@example.com', '1234', 'farmer'),
+('Amit Buyer', 'amit@example.com', '1234', 'buyer'),
+('Suman Farmer', 'suman@example.com', '1234', 'farmer');
+
+INSERT INTO produce
+(farmer_id, crop_name, quantity, `condition`, price, location) VALUES
+(1, 'Rice', 100, 'Good', 40, 'Kolkata'),
+(1, 'Potato', 200, 'Off-grade', 20, 'Egra'),
+(3, 'Tomato', 150, 'Over-ripe', 15, 'Midnapore');
