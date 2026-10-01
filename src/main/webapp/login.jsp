@@ -79,11 +79,11 @@
             <span>OR</span>
         </div>
 
-        <a href="register.html" class="btn secondary full">
+        <a href="register.jsp" class="btn secondary full">
             Create New Account
         </a>
 
-        <a href="index.html" class="back-link">
+        <a href="index.jsp" class="back-link">
             ← Back to Home
         </a>
 
